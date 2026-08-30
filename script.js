@@ -43,66 +43,132 @@ filterButtons.forEach(function (button) {
 });
 
 
-// ========================================
-// PORTFOLIO IMAGE PREVIEW
-// ========================================
+// =========================
+// PORTFOLIO IMAGE LIGHTBOX
+// =========================
 
-portfolioItems.forEach(function (item) {
+document.addEventListener("DOMContentLoaded", () => {
 
-    item.addEventListener("click", function () {
+    const portfolioItems = document.querySelectorAll(".portfolio-item");
 
+    // Create lightbox
+    const lightbox = document.createElement("div");
+    lightbox.className = "portfolio-lightbox";
+
+    lightbox.innerHTML = `
+        <button class="lightbox-close">&times;</button>
+
+        <button class="lightbox-prev">&#10094;</button>
+
+        <div class="lightbox-content">
+            <img src="" alt="Portfolio Preview">
+            <h3></h3>
+        </div>
+
+        <button class="lightbox-next">&#10095;</button>
+    `;
+
+    document.body.appendChild(lightbox);
+
+    const lightboxImage = lightbox.querySelector("img");
+    const lightboxTitle = lightbox.querySelector("h3");
+    const closeButton = lightbox.querySelector(".lightbox-close");
+    const prevButton = lightbox.querySelector(".lightbox-prev");
+    const nextButton = lightbox.querySelector(".lightbox-next");
+
+    let currentIndex = 0;
+
+    const items = Array.from(portfolioItems);
+
+    function openLightbox(index) {
+
+        currentIndex = index;
+
+        const item = items[currentIndex];
         const image = item.querySelector("img");
+        const title = item.querySelector("h3");
 
-        if (!image) {
-            return;
+        lightboxImage.src = image.src;
+        lightboxImage.alt = image.alt;
+        lightboxTitle.textContent = title.textContent;
+
+        lightbox.classList.add("active");
+
+        document.body.style.overflow = "hidden";
+    }
+
+    function closeLightbox() {
+
+        lightbox.classList.remove("active");
+
+        document.body.style.overflow = "";
+    }
+
+    function showNext() {
+
+        currentIndex++;
+
+        if (currentIndex >= items.length) {
+            currentIndex = 0;
         }
 
-        // Create preview
-        const preview = document.createElement("div");
+        openLightbox(currentIndex);
+    }
 
-        preview.className = "image-preview";
+    function showPrevious() {
 
-        preview.innerHTML = `
-            <div class="preview-box">
-                <button class="preview-close">&times;</button>
-                <img src="${image.src}" alt="${image.alt}">
-            </div>
-        `;
+        currentIndex--;
 
-        document.body.appendChild(preview);
+        if (currentIndex < 0) {
+            currentIndex = items.length - 1;
+        }
 
-        // Close button
-        const closeButton =
-            preview.querySelector(".preview-close");
+        openLightbox(currentIndex);
+    }
 
-        closeButton.addEventListener("click", function () {
-            preview.remove();
+    // Open image when portfolio item is clicked
+    portfolioItems.forEach((item, index) => {
+
+        item.style.cursor = "pointer";
+
+        item.addEventListener("click", () => {
+            openLightbox(index);
         });
 
-        // Click outside image
-        preview.addEventListener("click", function (event) {
+    });
 
-            if (event.target === preview) {
-                preview.remove();
-            }
+    // Buttons
+    closeButton.addEventListener("click", closeLightbox);
 
-        });
+    nextButton.addEventListener("click", showNext);
 
-        // ESC key
-        document.addEventListener("keydown", function closeWithEsc(event) {
+    prevButton.addEventListener("click", showPrevious);
 
-            if (event.key === "Escape") {
+    // Click outside image to close
+    lightbox.addEventListener("click", (event) => {
 
-                preview.remove();
+        if (event.target === lightbox) {
+            closeLightbox();
+        }
 
-                document.removeEventListener(
-                    "keydown",
-                    closeWithEsc
-                );
+    });
 
-            }
+    // Keyboard controls
+    document.addEventListener("keydown", (event) => {
 
-        });
+        if (!lightbox.classList.contains("active")) return;
+
+        if (event.key === "Escape") {
+            closeLightbox();
+        }
+
+        if (event.key === "ArrowRight") {
+            showNext();
+        }
+
+        if (event.key === "ArrowLeft") {
+            showPrevious();
+        }
 
     });
 
