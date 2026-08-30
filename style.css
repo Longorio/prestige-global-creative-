@@ -309,7 +309,10 @@ h2 span {
 ========================================= */
 
 .services {
-    background: var(--dark);
+    background:
+        radial-gradient(circle at 15% 20%, rgba(201, 162, 39, 0.18), transparent 35%),
+        radial-gradient(circle at 85% 80%, rgba(120, 80, 220, 0.16), transparent 35%),
+        linear-gradient(135deg, #151020, #101827, #17120d);
 }
 
 .service-grid {
@@ -324,9 +327,10 @@ h2 span {
     position: relative;
     min-height: 270px;
     padding: 50px;
-    background: var(--dark);
+    background: rgba(255, 255, 255, 0.045);
+    border: 1px solid rgba(255, 255, 255, 0.08);
     overflow: hidden;
-    transition: background 0.4s ease;
+    transition: background 0.4s ease, transform 0.4s ease;
 }
 
 .service-card::before {
@@ -344,8 +348,9 @@ h2 span {
     background: #161616;
 }
 
-.service-card:hover::before {
-    width: 100%;
+.service-card:hover {
+    background: rgba(255, 255, 255, 0.09);
+    transform: translateY(-5px);
 }
 
 .service-card span {
@@ -581,97 +586,117 @@ h2 span {
     line-height: 1.1;
 }
 
-/* =========================================
-   LIGHTBOX
-========================================= */
+/* =========================
+   PORTFOLIO LIGHTBOX
+========================= */
 
-.lightbox {
+.portfolio-lightbox {
     position: fixed;
     inset: 0;
-    z-index: 2000;
-
+    background: rgba(0, 0, 0, 0.92);
     display: flex;
     align-items: center;
     justify-content: center;
-
-    padding: 40px;
-
-    background: rgba(0, 0, 0, 0.96);
-
+    z-index: 9999;
     opacity: 0;
     visibility: hidden;
-
-    transition:
-        opacity 0.4s ease,
-        visibility 0.4s ease;
+    transition: 0.3s ease;
+    padding: 40px;
 }
 
-.lightbox.active {
+.portfolio-lightbox.active {
     opacity: 1;
     visibility: visible;
 }
 
 .lightbox-content {
-    position: relative;
-    width: 100%;
-    max-width: 1000px;
-
-    transform: scale(0.92);
-
-    transition: transform 0.4s ease;
-}
-
-.lightbox.active .lightbox-content {
-    transform: scale(1);
+    max-width: 90vw;
+    max-height: 90vh;
+    text-align: center;
 }
 
 .lightbox-content img {
-    width: 100%;
-    max-height: 75vh;
+    max-width: 90vw;
+    max-height: 80vh;
+    width: auto;
+    height: auto;
     object-fit: contain;
-    background: #111111;
+    display: block;
+    margin: auto;
+    border-radius: 8px;
 }
 
-.lightbox-info {
-    padding-top: 20px;
+.lightbox-content h3 {
+    margin-top: 18px;
+    font-size: 20px;
+    letter-spacing: 1px;
 }
 
-.lightbox-info span {
-    color: var(--gold);
-    font-size: 10px;
-    font-weight: 600;
-    letter-spacing: 3px;
-}
-
-.lightbox-info h3 {
-    margin-top: 6px;
-    color: var(--white);
-    font-size: 28px;
+.lightbox-close,
+.lightbox-prev,
+.lightbox-next {
+    position: absolute;
+    border: none;
+    background: none;
+    color: white;
+    cursor: pointer;
+    z-index: 10000;
 }
 
 .lightbox-close {
-    position: absolute;
-    top: 25px;
+    top: 20px;
     right: 30px;
-    z-index: 10;
-
-    width: 45px;
-    height: 45px;
-
-    border: 1px solid #444444;
-    background: transparent;
-    color: var(--white);
-
-    font-size: 30px;
-    cursor: pointer;
-
-    transition: all 0.3s ease;
+    font-size: 45px;
 }
 
-.lightbox-close:hover {
-    background: var(--gold);
-    border-color: var(--gold);
-    color: var(--black);
+.lightbox-prev {
+    left: 25px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 45px;
+}
+
+.lightbox-next {
+    right: 25px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 45px;
+}
+
+.lightbox-close:hover,
+.lightbox-prev:hover,
+.lightbox-next:hover {
+    opacity: 0.7;
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+
+    .portfolio-lightbox {
+        padding: 20px;
+    }
+
+    .lightbox-content img {
+        max-width: 95vw;
+        max-height: 75vh;
+    }
+
+    .lightbox-prev {
+        left: 8px;
+        font-size: 35px;
+    }
+
+    .lightbox-next {
+        right: 8px;
+        font-size: 35px;
+    }
+
+    .lightbox-close {
+        right: 15px;
+        top: 10px;
+        font-size: 38px;
+    }
+
 }
 
 /* =========================================
@@ -916,4 +941,3 @@ footer {
         transform: translateY(0);
     }
 }
-```
