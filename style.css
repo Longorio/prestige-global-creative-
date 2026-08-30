@@ -339,7 +339,16 @@ h2 {
 }
 
 h2 span {
-    color: #777777;
+    background: linear-gradient(
+        90deg,
+        #c9a227 0%,
+        #a855f7 50%,
+        #3b82f6 100%
+    );
+
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
 }
 
 
@@ -498,7 +507,23 @@ h2 span {
 ========================================= */
 
 .why-us {
-    background: #0c0c0c;
+    background:
+        radial-gradient(
+            circle at 10% 20%,
+            rgba(124, 58, 237, 0.22),
+            transparent 30%
+        ),
+        radial-gradient(
+            circle at 90% 70%,
+            rgba(37, 99, 235, 0.18),
+            transparent 32%
+        ),
+        linear-gradient(
+            135deg,
+            #050505 0%,
+            #0b0714 45%,
+            #05080f 100%
+        );
 }
 
 .why-us-heading {
@@ -524,15 +549,9 @@ h2 span {
 }
 
 .why-card {
-    position: relative;
-    min-height: 280px;
-    padding: 45px;
-    background: #0c0c0c;
-    overflow: hidden;
-
-    transition:
-        background 0.4s ease,
-        transform 0.4s ease;
+    background: rgba(255, 255, 255, 0.035);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(10px);
 }
 
 .why-card::before {
@@ -547,7 +566,15 @@ h2 span {
 }
 
 .why-card:hover {
-    background: #151515;
+    background:
+        linear-gradient(
+            135deg,
+            rgba(201, 162, 39, 0.10),
+            rgba(124, 58, 237, 0.12)
+        );
+
+    box-shadow:
+        0 20px 60px rgba(124, 58, 237, 0.12);
 }
 
 .why-card:hover::before {
@@ -555,12 +582,14 @@ h2 span {
 }
 
 .why-card > span {
-    display: inline-block;
-    margin-bottom: 30px;
-    color: var(--gold);
-    font-size: 11px;
-    font-weight: 600;
-    letter-spacing: 3px;
+    background: linear-gradient(
+        90deg,
+        #c9a227,
+        #a855f7
+    );
+
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
 .why-card h3 {
@@ -729,7 +758,16 @@ h2 span {
 }
 
 .contact h2 span {
-    color: #777777;
+    background: linear-gradient(
+        90deg,
+        #c9a227,
+        #a855f7,
+        #3b82f6
+    );
+
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
 }
 
 .contact p {
